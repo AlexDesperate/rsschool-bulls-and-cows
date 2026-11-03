@@ -23,5 +23,12 @@ export function changeLength(state: GameState, length: number): GameState {
 }
 
 export function startGame(state: GameState, random = Math.random): GameState {
-  return state;
+  return {
+    ...state,
+    screen: 'GAME',
+    secret: generateSecret(state.settings.length, state.settings.base, random),
+    history: [],
+    startTime: Date.now(),
+    duration: 0,
+  };
 }

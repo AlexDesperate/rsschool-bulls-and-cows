@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { INITIAL_STATE } from './types';
-import { changeBase, changeLength } from './state';
+import { changeBase, changeLength, startGame } from './state';
 
 describe('State Modifiers', () => {
   describe('changeBase', () => {
