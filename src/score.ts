@@ -1,4 +1,4 @@
-import { ScoreRecord, GameBase } from './types';
+import { ScoreRecord, GameBase } from './types.js';
 
 const STORAGE_KEY = 'bulls_and_cows_scores';
 

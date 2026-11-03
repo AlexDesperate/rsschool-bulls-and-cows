@@ -1,6 +1,6 @@
-import { GameState, INITIAL_STATE, GameBase } from './types';
-import { changeBase, changeLength, startGame, makeGuess, goToMenu } from './state';
-import { renderMenu, renderGame, renderWin } from './ui';
+import { GameState, INITIAL_STATE, GameBase } from './types.js';
+import { changeBase, changeLength, startGame, makeGuess, goToMenu } from './state.js';
+import { renderMenu, renderGame, renderWin } from './ui.js';
 
 let state: GameState = INITIAL_STATE;
 

@@ -1,5 +1,5 @@
-import { GameState, GameBase, INITIAL_STATE } from './types';
-import { generateSecret, evaluateGuess } from './core';
+import { GameState, GameBase, INITIAL_STATE } from './types.js';
+import { generateSecret, evaluateGuess } from './core.js';
 export function changeBase(state: GameState, base: GameBase): GameState {
   const targetLength = base === 2 ? 2 : state.settings.length;
 

@@ -1,5 +1,5 @@
-import { getScores, saveScore } from './score';
-import { GameState, GameBase } from './types';
+import { getScores, saveScore } from './score.js';
+import { GameState, GameBase } from './types.js';
 
 interface ElementOptions {
   className?: string;

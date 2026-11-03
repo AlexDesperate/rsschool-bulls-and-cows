@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { INITIAL_STATE } from './types';
-import { changeBase, changeLength, startGame, makeGuess, goToMenu } from './state';
+import { INITIAL_STATE } from './types.js';
+import { changeBase, changeLength, startGame, makeGuess, goToMenu } from './state.js';
 
 describe('State Modifiers', () => {
   describe('changeBase', () => {
