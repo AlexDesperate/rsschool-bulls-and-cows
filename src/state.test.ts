@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { INITIAL_STATE } from './types';
-import { changeBase, changeLength, startGame } from './state';
+import { changeBase, changeLength, startGame, makeGuess } from './state';
 
 describe('State Modifiers', () => {
   describe('changeBase', () => {
@@ -45,6 +45,44 @@ describe('State Modifiers', () => {
       expect(nextState.secret.length).toBe(4);
       expect(nextState.history).toEqual([]);
       expect(nextState.startTime).not.toBeNull();
+    });
+  });
+
+  describe('makeGuess', () => {
+    it('should add guess entry to history and remain on GAME screen if not fully guessed', () => {
+      const state = {
+        ...INITIAL_STATE,
+        screen: 'GAME' as const,
+        secret: '1234',
+        settings: { base: 10 as const, length: 4 },
+        startTime: Date.now(),
+      };
+
+      const nextState = makeGuess(state, '1243'); // 2 bulls (1, 2), 2 cows (4, 3)
+
+      expect(nextState.screen).toBe('GAME');
+      expect(nextState.history).toHaveLength(1);
+      expect(nextState.history[0]).toEqual({
+        guess: '1243',
+        bulls: 2,
+        cows: 2,
+      });
+    });
+
+    it('should transition to WIN screen and calculate duration when all bulls found', () => {
+      const startTime = Date.now() - 5000; // 5 seconds ago
+      const state = {
+        ...INITIAL_STATE,
+        screen: 'GAME' as const,
+        secret: '1234',
+        settings: { base: 10 as const, length: 4 },
+        startTime,
+      };
+
+      const nextState = makeGuess(state, '1234'); // 4 bulls
+
+      expect(nextState.screen).toBe('WIN');
+      expect(nextState.duration).toBeGreaterThanOrEqual(5);
     });
   });
 });

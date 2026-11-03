@@ -32,3 +32,7 @@ export function startGame(state: GameState, random = Math.random): GameState {
     duration: 0,
   };
 }
+
+export function makeGuess(state: GameState, guess: string): GameState {
+  return state;
+}
