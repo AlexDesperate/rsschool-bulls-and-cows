@@ -1,4 +1,5 @@
 import { getScores, saveScore } from './score.js';
+import { createDigitValidator, isValidGuess } from './core.js';
 export function createElement(tagName, options = {}) {
     const element = document.createElement(tagName);
     if (options.className) {
@@ -34,7 +35,7 @@ export function renderMenu(state, onBaseChange, onLengthChange, onStart) {
         onBaseChange(val);
     });
     const lengthSelect = createElement('select', { className: 'select-length' });
-    for (let i = 2; i <= 10; i++) {
+    for (let i = 2; i <= 6; i++) {
         const opt = createElement('option', { text: i.toString(), className: 'ui-option' });
         opt.value = i.toString();
         opt.selected = state.settings.length === i;
@@ -83,13 +84,21 @@ export function renderGame(state, onGuess, onCancel) {
             placeholder: `Enter ${state.settings.length} unique digits`,
         },
     });
+    const isValidDigit = createDigitValidator(state.settings.base);
+    input.addEventListener('input', (e) => {
+        const target = e.target;
+        target.value = [...target.value]
+            .filter((char) => isValidDigit(char))
+            .join('');
+    });
     const submitBtn = createElement('button', {
         className: 'btn-submit',
         text: 'Guess',
     });
     submitBtn.addEventListener('click', () => {
-        if (input.value.trim().length === state.settings.length) {
-            onGuess(input.value.trim());
+        const guessValue = input.value.trim();
+        if (isValidGuess(guessValue, state.settings.length, state.settings.base)) {
+            onGuess(guessValue);
             input.value = '';
         }
     });
