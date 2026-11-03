@@ -1,4 +1,4 @@
-import { GameState, GameBase } from './types';
+import { generateSecret } from './core';
 
 export function changeBase(state: GameState, base: GameBase): GameState {
   const targetLength = base === 2 ? 2 : state.settings.length;
@@ -20,4 +20,8 @@ export function changeLength(state: GameState, length: number): GameState {
       length,
     },
   };
+}
+
+export function startGame(state: GameState, random = Math.random): GameState {
+  return state;
 }
