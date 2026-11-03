@@ -53,6 +53,19 @@ export const evaluateGuess = (secret: string, guess: string): { bulls: number; c
 
   return { bulls, cows };
 };
+const memoCache: Record<string, number> = {};
+
 export const countPossibleSecrets = (length: number, base: number): number => {
-  return 0;
+  const cacheKey = `${length}-${base}`;
+
+  if (cacheKey in memoCache) {
+    return memoCache[cacheKey];
+  }
+
+  if (length === 0) return 1;
+
+  const result = base * countPossibleSecrets(length - 1, base - 1);
+  memoCache[cacheKey] = result;
+
+  return result;
 };
