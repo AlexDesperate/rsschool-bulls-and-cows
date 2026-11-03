@@ -24,5 +24,18 @@ export const generateSecret = (
   base: number,
   random: () => number = Math.random,
 ): string => {
-  return '';
+  const allDigits = '0123456789abcdefghijklmnopqrstuvwxyz';
+  const availableChars = allDigits.substring(0, base).split('');
+
+  const build = (current: string[]): string[] => {
+    if (current.length === length) return current;
+
+    const randomIndex = Math.floor(random() * availableChars.length);
+    const chosenChar = availableChars[randomIndex];
+
+    const next = current.includes(chosenChar) ? current : [...current, chosenChar];
+    return build(next);
+  };
+
+  return build([]).join('');
 };
