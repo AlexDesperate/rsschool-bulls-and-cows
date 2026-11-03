@@ -4,7 +4,7 @@ import { getScores, saveScore } from './score';
 describe('Score System', () => {
   beforeEach(() => {
     let store: Record<string, string> = {};
-    global.localStorage = {
+    globalThis.localStorage = {
       getItem: (key: string) => store[key] || null,
       setItem: (key: string, value: string) => {
         store[key] = value;
