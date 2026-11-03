@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { getScores, saveScore } from './score';
+import { getScores, saveScore } from './score.js';
 
 describe('Score System', () => {
   beforeEach(() => {

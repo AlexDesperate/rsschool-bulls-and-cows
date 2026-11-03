@@ -4,7 +4,7 @@ exports.createElement = createElement;
 exports.renderMenu = renderMenu;
 exports.renderGame = renderGame;
 exports.renderWin = renderWin;
-const score_1 = require("./score");
+const score_js_1 = require("./score.js");
 function createElement(tagName, options = {}) {
     const element = document.createElement(tagName);
     if (options.className) {
@@ -149,7 +149,7 @@ function renderWin(state, onRestart) {
     const scoreContainer = createElement('div', { className: 'score-container' });
     const renderScoresTable = () => {
         scoreContainer.textContent = '';
-        const scores = (0, score_1.getScores)();
+        const scores = (0, score_js_1.getScores)();
         const tableHeader = createElement('tr', {
             className: 'score-header',
             children: [
@@ -183,7 +183,7 @@ function renderWin(state, onRestart) {
     saveBtn.addEventListener('click', () => {
         const name = nameInput.value.trim();
         if (name) {
-            (0, score_1.saveScore)(name, state.settings.base, state.settings.length, state.history.length, state.duration);
+            (0, score_js_1.saveScore)(name, state.settings.base, state.settings.length, state.history.length, state.duration);
             nameInput.disabled = true;
             saveBtn.disabled = true;
             renderScoresTable();
