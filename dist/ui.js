@@ -88,6 +88,7 @@ export function renderGame(state, onGuess, onCancel) {
     input.addEventListener('input', (e) => {
         const target = e.target;
         target.value = [...target.value]
+            .map((char) => char.toLowerCase())
             .filter((char) => isValidDigit(char))
             .join('');
     });
