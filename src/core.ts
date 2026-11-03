@@ -19,3 +19,10 @@ export const isValidGuess = (guess: string, length: number, base: number): boole
   const isDigitValid = createDigitValidator(base);
   return chars.every((char) => isDigitValid(char));
 };
+export const generateSecret = (
+  length: number,
+  base: number,
+  random: () => number = Math.random,
+): string => {
+  return '';
+};

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { createDigitValidator, isValidGuess } from './core.js';
+import { createDigitValidator, isValidGuess, generateSecret } from './core.js';
 
 describe('createDigitValidator', () => {
   it('should validate binary numbers correctly', () => {
@@ -22,6 +22,7 @@ describe('createDigitValidator', () => {
     expect(isHex('g')).toBe(false);
   });
 });
+
 describe('isValidGuess', () => {
   it('should return true for a valid decimal guess', () => {
     expect(isValidGuess('1234', 4, 10)).toBe(true);
@@ -34,11 +35,22 @@ describe('isValidGuess', () => {
 
   it('should return false if characters are repeated', () => {
     expect(isValidGuess('1123', 4, 10)).toBe(false);
-    expect(isValidGuess('aAbB', 4, 16)).toBe(false); // Регистр уникальности
+    expect(isValidGuess('aAbB', 4, 16)).toBe(false);
   });
 
   it('should return false if characters are out of base range', () => {
     expect(isValidGuess('123a', 4, 10)).toBe(false);
     expect(isValidGuess('1232', 4, 2)).toBe(false);
+  });
+});
+
+describe('generateSecret', () => {
+  it('should generate a secret string of correct length and base', () => {
+    const mockValues = [0.1, 0.2, 0.0, 0.3];
+    const mockRandom = () => mockValues.shift() ?? 0;
+
+    const secret = generateSecret(4, 10, mockRandom);
+    expect(secret).toHaveLength(4);
+    expect(new Set(secret).size).toBe(4);
   });
 });
