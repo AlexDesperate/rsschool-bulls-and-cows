@@ -53,3 +53,6 @@ export const evaluateGuess = (secret: string, guess: string): { bulls: number; c
 
   return { bulls, cows };
 };
+export const countPossibleSecrets = (length: number, base: number): number => {
+  return 0;
+};

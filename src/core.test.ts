@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { createDigitValidator, isValidGuess, generateSecret, evaluateGuess } from './core.js';
+import {
+  createDigitValidator,
+  isValidGuess,
+  generateSecret,
+  evaluateGuess,
+  countPossibleSecrets,
+} from './core.js';
 
 describe('createDigitValidator', () => {
   it('should validate binary numbers correctly', () => {
@@ -63,5 +69,12 @@ describe('evaluateGuess', () => {
 
   it('should be case-insensitive', () => {
     expect(evaluateGuess('aBcd', 'AbCD')).toEqual({ bulls: 4, cows: 0 });
+  });
+});
+describe('countPossibleSecrets', () => {
+  it('should correctly calculate combinations', () => {
+    expect(countPossibleSecrets(4, 10)).toBe(5040);
+    expect(countPossibleSecrets(2, 2)).toBe(2);
+    expect(countPossibleSecrets(0, 10)).toBe(1);
   });
 });
