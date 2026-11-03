@@ -1,4 +1,4 @@
-import { generateSecret } from './core';
+import { generateSecret, evaluateGuess } from './core';
 
 export function changeBase(state: GameState, base: GameBase): GameState {
   const targetLength = base === 2 ? 2 : state.settings.length;
@@ -34,5 +34,18 @@ export function startGame(state: GameState, random = Math.random): GameState {
 }
 
 export function makeGuess(state: GameState, guess: string): GameState {
-  return state;
+  const { bulls, cows } = evaluateGuess(state.secret, guess);
+  const newEntry = { guess, bulls, cows };
+  const nextHistory = [...state.history, newEntry];
+
+  const isWin = bulls === state.settings.length;
+  const now = Date.now();
+  const calculatedDuration = state.startTime ? Math.floor((now - state.startTime) / 1000) : 0;
+
+  return {
+    ...state,
+    screen: isWin ? 'WIN' : state.screen,
+    history: nextHistory,
+    duration: isWin ? calculatedDuration : state.duration,
+  };
 }
