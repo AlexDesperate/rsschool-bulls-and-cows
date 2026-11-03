@@ -35,6 +35,7 @@ export function createElement<K extends keyof HTMLElementTagNameMap>(
 
   return element;
 }
+
 export function renderMenu(
   state: GameState,
   onBaseChange: (base: GameBase) => void,
@@ -170,4 +171,32 @@ export function renderGame(
   });
 
   return gameContainer;
+}
+
+export function renderWin(state: GameState, onRestart: () => void): HTMLElement {
+  const winMessage = createElement('h1', { className: 'win-title', text: 'You Won!' });
+  const baseText = `System Base: ${state.settings.base}`;
+  const lengthText = `Word Length: ${state.settings.length}`;
+  const attemptsText = `Total Attempts: ${state.history.length}`;
+  const timeText = `Time Taken: ${state.duration} seconds`;
+
+  const restartBtn = createElement('button', {
+    className: 'btn-restart',
+    text: 'Play Again',
+  });
+  restartBtn.addEventListener('click', onRestart);
+
+  const winContainer = createElement('div', {
+    className: 'win-container',
+    children: [
+      winMessage,
+      createElement('p', { className: 'stat-line', text: baseText }),
+      createElement('p', { className: 'stat-line', text: lengthText }),
+      createElement('p', { className: 'stat-line', text: attemptsText }),
+      createElement('p', { className: 'stat-line', text: timeText }),
+      restartBtn,
+    ],
+  });
+
+  return winContainer;
 }

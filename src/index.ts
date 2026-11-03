@@ -1,6 +1,6 @@
 import { GameState, INITIAL_STATE, GameBase } from './types';
 import { changeBase, changeLength, startGame, makeGuess, goToMenu } from './state';
-import { renderMenu, renderGame } from './ui';
+import { renderMenu, renderGame, renderWin } from './ui';
 
 let state: GameState = INITIAL_STATE;
 
@@ -28,6 +28,9 @@ function render(): void {
       () => updateState(goToMenu(state)),
     );
     root.appendChild(gameElement);
+  } else if (state.screen === 'WIN') {
+    const winElement = renderWin(state, () => updateState(goToMenu(state)));
+    root.appendChild(winElement);
   }
 }
 
