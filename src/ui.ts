@@ -102,3 +102,72 @@ export function renderMenu(
 
   return menuContainer;
 }
+export function renderGame(
+  state: GameState,
+  onGuess: (guess: string) => void,
+  onCancel: () => void,
+): HTMLElement {
+  const infoText = `Playing with Base ${state.settings.base}, Length ${state.settings.length}`;
+  const header = createElement('div', { className: 'game-info', text: infoText });
+
+  const input = createElement('input', {
+    className: 'input-guess',
+    attrs: {
+      type: 'text',
+      maxlength: state.settings.length.toString(),
+      placeholder: `Enter ${state.settings.length} unique digits`,
+    },
+  }) as HTMLInputElement;
+
+  const submitBtn = createElement('button', {
+    className: 'btn-submit',
+    text: 'Guess',
+  });
+
+  submitBtn.addEventListener('click', () => {
+    if (input.value.trim().length === state.settings.length) {
+      onGuess(input.value.trim());
+      input.value = '';
+    }
+  });
+
+  const cancelBtn = createElement('button', {
+    className: 'btn-cancel',
+    text: 'Back to Menu',
+  });
+  cancelBtn.addEventListener('click', onCancel);
+
+  const tableRows = state.history.map((entry, index) => {
+    return createElement('tr', {
+      className: 'table-row',
+      children: [
+        createElement('td', { text: (index + 1).toString(), className: 'cell-index' }),
+        createElement('td', { text: entry.guess, className: 'cell-guess' }),
+        createElement('td', { text: entry.bulls.toString(), className: 'cell-bulls' }),
+        createElement('td', { text: entry.cows.toString(), className: 'cell-cows' }),
+      ],
+    });
+  });
+
+  const tableHeader = createElement('tr', {
+    className: 'table-header',
+    children: [
+      createElement('th', { text: '#' }),
+      createElement('th', { text: 'Guess' }),
+      createElement('th', { text: 'Bulls' }),
+      createElement('th', { text: 'Cows' }),
+    ],
+  });
+
+  const historyTable = createElement('table', {
+    className: 'history-table',
+    children: [tableHeader, ...tableRows],
+  });
+
+  const gameContainer = createElement('div', {
+    className: 'game-container',
+    children: [header, input, submitBtn, cancelBtn, historyTable],
+  });
+
+  return gameContainer;
+}

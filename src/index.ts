@@ -1,6 +1,6 @@
 import { GameState, INITIAL_STATE, GameBase } from './types';
-import { changeBase, changeLength, startGame } from './state';
-import { renderMenu } from './ui';
+import { changeBase, changeLength, startGame, makeGuess, goToMenu } from './state';
+import { renderMenu, renderGame } from './ui';
 
 let state: GameState = INITIAL_STATE;
 
@@ -21,6 +21,13 @@ function render(): void {
       () => updateState(startGame(state)),
     );
     root.appendChild(menuElement);
+  } else if (state.screen === 'GAME') {
+    const gameElement = renderGame(
+      state,
+      (guess: string) => updateState(makeGuess(state, guess)),
+      () => updateState(goToMenu(state)),
+    );
+    root.appendChild(gameElement);
   }
 }
 
