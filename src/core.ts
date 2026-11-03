@@ -6,6 +6,16 @@ export const createDigitValidator = (base: number): ((char: string) => boolean) 
     return validDigits.includes(char.toLowerCase());
   };
 };
+
 export const isValidGuess = (guess: string, length: number, base: number): boolean => {
-  return false;
+  if (guess.length !== length) return false;
+
+  const lowerGuess = guess.toLowerCase();
+  const chars = lowerGuess.split('');
+
+  const uniqueChars = new Set(chars);
+  if (uniqueChars.size !== length) return false;
+
+  const isDigitValid = createDigitValidator(base);
+  return chars.every((char) => isDigitValid(char));
 };
