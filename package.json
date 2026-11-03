@@ -1,0 +1,26 @@
+{
+  "name": "rsschool-bulls-and-cows",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexDesperate/rsschool-bulls-and-cows.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AlexDesperate/rsschool-bulls-and-cows/issues"
+  },
+  "homepage": "https://github.com/AlexDesperate/rsschool-bulls-and-cows#readme",
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}
