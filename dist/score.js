@@ -1,9 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getScores = getScores;
-exports.saveScore = saveScore;
 const STORAGE_KEY = 'bulls_and_cows_scores';
-function getScores() {
+export function getScores() {
     const data = localStorage.getItem(STORAGE_KEY);
     if (!data) {
         return [];
@@ -15,7 +11,7 @@ function getScores() {
         return [];
     }
 }
-function saveScore(name, base, length, attempts, timeSeconds) {
+export function saveScore(name, base, length, attempts, timeSeconds) {
     const currentScores = getScores();
     const newRecord = {
         name,

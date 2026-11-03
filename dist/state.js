@@ -1,13 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.changeBase = changeBase;
-exports.changeLength = changeLength;
-exports.startGame = startGame;
-exports.makeGuess = makeGuess;
-exports.goToMenu = goToMenu;
-const types_js_1 = require("./types.js");
-const core_js_1 = require("./core.js");
-function changeBase(state, base) {
+import { INITIAL_STATE } from './types.js';
+import { generateSecret, evaluateGuess } from './core.js';
+export function changeBase(state, base) {
     const targetLength = base === 2 ? 2 : state.settings.length;
     return {
         ...state,
@@ -17,7 +10,7 @@ function changeBase(state, base) {
         },
     };
 }
-function changeLength(state, length) {
+export function changeLength(state, length) {
     return {
         ...state,
         settings: {
@@ -26,18 +19,18 @@ function changeLength(state, length) {
         },
     };
 }
-function startGame(state, random = Math.random) {
+export function startGame(state, random = Math.random) {
     return {
         ...state,
         screen: 'GAME',
-        secret: (0, core_js_1.generateSecret)(state.settings.length, state.settings.base, random),
+        secret: generateSecret(state.settings.length, state.settings.base, random),
         history: [],
         startTime: Date.now(),
         duration: 0,
     };
 }
-function makeGuess(state, guess) {
-    const { bulls, cows } = (0, core_js_1.evaluateGuess)(state.secret, guess);
+export function makeGuess(state, guess) {
+    const { bulls, cows } = evaluateGuess(state.secret, guess);
     const newEntry = { guess, bulls, cows };
     const nextHistory = [...state.history, newEntry];
     const isWin = bulls === state.settings.length;
@@ -50,9 +43,9 @@ function makeGuess(state, guess) {
         duration: isWin ? calculatedDuration : state.duration,
     };
 }
-function goToMenu(state) {
+export function goToMenu(state) {
     return {
-        ...types_js_1.INITIAL_STATE,
+        ...INITIAL_STATE,
         settings: state.settings,
     };
 }

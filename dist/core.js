@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.countPossibleSecrets = exports.evaluateGuess = exports.generateSecret = exports.isValidGuess = exports.createDigitValidator = void 0;
-const createDigitValidator = (base) => {
+export const createDigitValidator = (base) => {
     return (char) => {
         if (char.length !== 1)
             return false;
@@ -10,8 +7,7 @@ const createDigitValidator = (base) => {
         return validDigits.includes(char.toLowerCase());
     };
 };
-exports.createDigitValidator = createDigitValidator;
-const isValidGuess = (guess, length, base) => {
+export const isValidGuess = (guess, length, base) => {
     if (guess.length !== length)
         return false;
     const lowerGuess = guess.toLowerCase();
@@ -19,11 +15,10 @@ const isValidGuess = (guess, length, base) => {
     const uniqueChars = new Set(chars);
     if (uniqueChars.size !== length)
         return false;
-    const isDigitValid = (0, exports.createDigitValidator)(base);
+    const isDigitValid = createDigitValidator(base);
     return chars.every((char) => isDigitValid(char));
 };
-exports.isValidGuess = isValidGuess;
-const generateSecret = (length, base, random = Math.random) => {
+export const generateSecret = (length, base, random = Math.random) => {
     const allDigits = '0123456789abcdefghijklmnopqrstuvwxyz';
     const availableChars = allDigits.substring(0, base).split('');
     const build = (current) => {
@@ -36,8 +31,7 @@ const generateSecret = (length, base, random = Math.random) => {
     };
     return build([]).join('');
 };
-exports.generateSecret = generateSecret;
-const evaluateGuess = (secret, guess) => {
+export const evaluateGuess = (secret, guess) => {
     const secretArr = secret.toLowerCase().split('');
     const guessArr = guess.toLowerCase().split('');
     const bulls = guessArr.reduce((acc, char, index) => {
@@ -48,17 +42,15 @@ const evaluateGuess = (secret, guess) => {
     }, 0);
     return { bulls, cows };
 };
-exports.evaluateGuess = evaluateGuess;
 const memoCache = {};
-const countPossibleSecrets = (length, base) => {
+export const countPossibleSecrets = (length, base) => {
     const cacheKey = `${length}-${base}`;
     if (cacheKey in memoCache) {
         return memoCache[cacheKey];
     }
     if (length === 0)
         return 1;
-    const result = base * (0, exports.countPossibleSecrets)(length - 1, base - 1);
+    const result = base * countPossibleSecrets(length - 1, base - 1);
     memoCache[cacheKey] = result;
     return result;
 };
-exports.countPossibleSecrets = countPossibleSecrets;

@@ -1,11 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.createElement = createElement;
-exports.renderMenu = renderMenu;
-exports.renderGame = renderGame;
-exports.renderWin = renderWin;
-const score_js_1 = require("./score.js");
-function createElement(tagName, options = {}) {
+import { getScores, saveScore } from './score.js';
+export function createElement(tagName, options = {}) {
     const element = document.createElement(tagName);
     if (options.className) {
         element.className = options.className;
@@ -25,7 +19,7 @@ function createElement(tagName, options = {}) {
     }
     return element;
 }
-function renderMenu(state, onBaseChange, onLengthChange, onStart) {
+export function renderMenu(state, onBaseChange, onLengthChange, onStart) {
     const bases = [2, 8, 10, 16];
     const baseOptions = bases.map((b) => {
         const opt = createElement('option', { text: b.toString(), className: 'ui-option' });
@@ -78,7 +72,7 @@ function renderMenu(state, onBaseChange, onLengthChange, onStart) {
     });
     return menuContainer;
 }
-function renderGame(state, onGuess, onCancel) {
+export function renderGame(state, onGuess, onCancel) {
     const infoText = `Playing with Base ${state.settings.base}, Length ${state.settings.length}`;
     const header = createElement('div', { className: 'game-info', text: infoText });
     const input = createElement('input', {
@@ -134,7 +128,7 @@ function renderGame(state, onGuess, onCancel) {
     });
     return gameContainer;
 }
-function renderWin(state, onRestart) {
+export function renderWin(state, onRestart) {
     const winMessage = createElement('h1', { className: 'win-title', text: 'You Won!' });
     const baseText = `System Base: ${state.settings.base}`;
     const lengthText = `Word Length: ${state.settings.length}`;
@@ -149,7 +143,7 @@ function renderWin(state, onRestart) {
     const scoreContainer = createElement('div', { className: 'score-container' });
     const renderScoresTable = () => {
         scoreContainer.textContent = '';
-        const scores = (0, score_js_1.getScores)();
+        const scores = getScores();
         const tableHeader = createElement('tr', {
             className: 'score-header',
             children: [
@@ -183,7 +177,7 @@ function renderWin(state, onRestart) {
     saveBtn.addEventListener('click', () => {
         const name = nameInput.value.trim();
         if (name) {
-            (0, score_js_1.saveScore)(name, state.settings.base, state.settings.length, state.history.length, state.duration);
+            saveScore(name, state.settings.base, state.settings.length, state.history.length, state.duration);
             nameInput.disabled = true;
             saveBtn.disabled = true;
             renderScoresTable();
