@@ -1,3 +1,4 @@
+import { getScores, saveScore } from './score';
 import { GameState, GameBase } from './types';
 
 interface ElementOptions {
@@ -180,23 +181,87 @@ export function renderWin(state: GameState, onRestart: () => void): HTMLElement 
   const attemptsText = `Total Attempts: ${state.history.length}`;
   const timeText = `Time Taken: ${state.duration} seconds`;
 
+  const container = createElement('div', { className: 'win-container' });
+
+  const nameInput = createElement('input', {
+    className: 'input-name',
+    attrs: { type: 'text', placeholder: 'Enter your name' },
+  }) as HTMLInputElement;
+
+  const saveBtn = createElement('button', { className: 'btn-save', text: 'Save Record' });
+
+  const scoreContainer = createElement('div', { className: 'score-container' });
+
+  const renderScoresTable = () => {
+    scoreContainer.textContent = '';
+    const scores = getScores();
+
+    const tableHeader = createElement('tr', {
+      className: 'score-header',
+      children: [
+        createElement('th', { text: '#' }),
+        createElement('th', { text: 'Name' }),
+        createElement('th', { text: 'Base' }),
+        createElement('th', { text: 'Length' }),
+        createElement('th', { text: 'Attempts' }),
+        createElement('th', { text: 'Time' }),
+      ],
+    });
+
+    const rows = scores.map((rec, index) => {
+      return createElement('tr', {
+        className: 'score-row',
+        children: [
+          createElement('td', { text: (index + 1).toString() }),
+          createElement('td', { text: rec.name }),
+          createElement('td', { text: rec.base.toString() }),
+          createElement('td', { text: rec.length.toString() }),
+          createElement('td', { text: rec.attempts.toString() }),
+          createElement('td', { text: `${rec.timeSeconds}s` }),
+        ],
+      });
+    });
+
+    const table = createElement('table', {
+      className: 'score-table',
+      children: [tableHeader, ...rows],
+    });
+    scoreContainer.appendChild(table);
+  };
+
+  saveBtn.addEventListener('click', () => {
+    const name = nameInput.value.trim();
+    if (name) {
+      saveScore(
+        name,
+        state.settings.base,
+        state.settings.length,
+        state.history.length,
+        state.duration,
+      );
+      nameInput.disabled = true;
+      saveBtn.disabled = true;
+      renderScoresTable();
+    }
+  });
+
+  renderScoresTable();
+
   const restartBtn = createElement('button', {
     className: 'btn-restart',
     text: 'Play Again',
   });
   restartBtn.addEventListener('click', onRestart);
 
-  const winContainer = createElement('div', {
-    className: 'win-container',
-    children: [
-      winMessage,
-      createElement('p', { className: 'stat-line', text: baseText }),
-      createElement('p', { className: 'stat-line', text: lengthText }),
-      createElement('p', { className: 'stat-line', text: attemptsText }),
-      createElement('p', { className: 'stat-line', text: timeText }),
-      restartBtn,
-    ],
-  });
+  container.appendChild(winMessage);
+  container.appendChild(createElement('p', { text: baseText }));
+  container.appendChild(createElement('p', { text: lengthText }));
+  container.appendChild(createElement('p', { text: attemptsText }));
+  container.appendChild(createElement('p', { text: timeText }));
+  container.appendChild(nameInput);
+  container.appendChild(saveBtn);
+  container.appendChild(scoreContainer);
+  container.appendChild(restartBtn);
 
-  return winContainer;
+  return container;
 }
