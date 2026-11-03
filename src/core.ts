@@ -40,5 +40,16 @@ export const generateSecret = (
   return build([]).join('');
 };
 export const evaluateGuess = (secret: string, guess: string): { bulls: number; cows: number } => {
-  return { bulls: 0, cows: 0 };
+  const secretArr = secret.toLowerCase().split('');
+  const guessArr = guess.toLowerCase().split('');
+
+  const bulls = guessArr.reduce((acc, char, index) => {
+    return char === secretArr[index] ? acc + 1 : acc;
+  }, 0);
+
+  const cows = guessArr.reduce((acc, char, index) => {
+    return char !== secretArr[index] && secretArr.includes(char) ? acc + 1 : acc;
+  }, 0);
+
+  return { bulls, cows };
 };
