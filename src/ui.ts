@@ -125,7 +125,10 @@ export function renderGame(
   const isValidDigit = createDigitValidator(state.settings.base);
   input.addEventListener('input', (e) => {
     const target = e.target as HTMLInputElement;
-    target.value = [...target.value].filter((char) => isValidDigit(char)).join('');
+    target.value = [...target.value]
+      .map((char) => char.toLowerCase())
+      .filter((char) => isValidDigit(char))
+      .join('');
   });
 
   const submitBtn = createElement('button', {
