@@ -1,4 +1,4 @@
-import { generateSecret, evaluateGuess } from './core';
+import { GameState, GameBase, INITIAL_STATE } from './types';
 
 export function changeBase(state: GameState, base: GameBase): GameState {
   const targetLength = base === 2 ? 2 : state.settings.length;
@@ -48,4 +48,8 @@ export function makeGuess(state: GameState, guess: string): GameState {
     history: nextHistory,
     duration: isWin ? calculatedDuration : state.duration,
   };
+}
+
+export function goToMenu(state: GameState): GameState {
+  return state;
 }

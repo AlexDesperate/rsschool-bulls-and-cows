@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { INITIAL_STATE } from './types';
-import { changeBase, changeLength, startGame, makeGuess } from './state';
+import { changeBase, changeLength, startGame, makeGuess, goToMenu } from './state';
 
 describe('State Modifiers', () => {
   describe('changeBase', () => {
@@ -83,6 +83,28 @@ describe('State Modifiers', () => {
 
       expect(nextState.screen).toBe('WIN');
       expect(nextState.duration).toBeGreaterThanOrEqual(5);
+    });
+  });
+  describe('goToMenu', () => {
+    it('should reset state to initial but keep active user settings', () => {
+      const state = {
+        screen: 'WIN' as const,
+        settings: { base: 16 as const, length: 5 },
+        secret: 'ABCDE',
+        history: [{ guess: 'ABCDE', bulls: 5, cows: 0 }],
+        startTime: 123456,
+        duration: 42,
+      };
+
+      const nextState = goToMenu(state);
+
+      expect(nextState.screen).toBe('MENU');
+      expect(nextState.settings.base).toBe(16);
+      expect(nextState.settings.length).toBe(5);
+      expect(nextState.secret).toBe('');
+      expect(nextState.history).toEqual([]);
+      expect(nextState.startTime).toBeNull();
+      expect(nextState.duration).toBe(0);
     });
   });
 });
