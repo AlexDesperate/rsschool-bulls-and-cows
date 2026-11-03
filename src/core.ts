@@ -6,3 +6,6 @@ export const createDigitValidator = (base: number): ((char: string) => boolean) 
     return validDigits.includes(char.toLowerCase());
   };
 };
+export const isValidGuess = (guess: string, length: number, base: number): boolean => {
+  return false;
+};

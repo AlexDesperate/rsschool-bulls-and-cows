@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { createDigitValidator } from './core.js';
+import { createDigitValidator, isValidGuess } from './core.js';
 
 describe('createDigitValidator', () => {
   it('should validate binary numbers correctly', () => {
@@ -20,5 +20,25 @@ describe('createDigitValidator', () => {
     expect(isHex('a')).toBe(true);
     expect(isHex('F')).toBe(true);
     expect(isHex('g')).toBe(false);
+  });
+});
+describe('isValidGuess', () => {
+  it('should return true for a valid decimal guess', () => {
+    expect(isValidGuess('1234', 4, 10)).toBe(true);
+  });
+
+  it('should return false if length is incorrect', () => {
+    expect(isValidGuess('123', 4, 10)).toBe(false);
+    expect(isValidGuess('12345', 4, 10)).toBe(false);
+  });
+
+  it('should return false if characters are repeated', () => {
+    expect(isValidGuess('1123', 4, 10)).toBe(false);
+    expect(isValidGuess('aAbB', 4, 16)).toBe(false); // Регистр уникальности
+  });
+
+  it('should return false if characters are out of base range', () => {
+    expect(isValidGuess('123a', 4, 10)).toBe(false);
+    expect(isValidGuess('1232', 4, 2)).toBe(false);
   });
 });
