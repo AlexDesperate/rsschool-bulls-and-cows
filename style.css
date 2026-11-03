@@ -1,0 +1,125 @@
+:root {
+  --bg-color: #1a1a1a;
+  --panel-bg: #2a2a2a;
+  --text-color: #ffffff;
+  --accent-color: #4caf50;
+  --accent-hover: #45a049;
+  --danger-color: #f44336;
+  --border-color: #444444;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.menu-container, .game-container, .win-container {
+  background-color: var(--panel-bg);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+}
+
+.game-title, .win-title {
+  margin-top: 0;
+  color: var(--accent-color);
+}
+
+.setting-row {
+  margin: 15px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1rem;
+}
+
+select, input[type="text"] {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 1rem;
+  outline: none;
+  width: 120px;
+}
+
+input[type="text"].input-guess {
+  width: calc(100% - 26px);
+  margin-bottom: 15px;
+  text-align: center;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+button {
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-start, .btn-submit, .btn-save, .btn-restart {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.btn-start:hover:not(:disabled), .btn-submit:hover:not(:disabled) {
+  background-color: var(--accent-hover);
+}
+
+.btn-cancel {
+  background-color: transparent;
+  color: #aaa;
+  border: 1px solid var(--border-color);
+}
+
+.btn-cancel:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+
+.history-table, .score-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 0.95rem;
+}
+
+.table-header th, .score-header th {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-bottom: 2px solid var(--border-color);
+  text-align: center;
+}
+
+.table-row td, .score-row td {
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.table-row:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
