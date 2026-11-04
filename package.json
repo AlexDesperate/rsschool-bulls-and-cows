@@ -8,7 +8,9 @@
     "test": "vitest run",
     "build": "tsc",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "lint": "eslint src/**/*.ts --no-error-on-unmatched-pattern",
+    "format": "prettier --write src/**/*.ts"
   },
   "repository": {
     "type": "git",
