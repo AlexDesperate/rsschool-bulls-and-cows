@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "type": "commonjs",
-    "scripts": {
+  "scripts": {
     "test": "vitest run",
     "build": "tsc",
     "predeploy": "npm run build",
@@ -22,10 +22,12 @@
   },
   "homepage": "https://github.com/AlexDesperate/rsschool-bulls-and-cows#readme",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "eslint": "^10.14.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.7",
     "gh-pages": "^6.3.0",
+    "globals": "^17.14.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.6.0",
     "prettier": "^3.9.10",
